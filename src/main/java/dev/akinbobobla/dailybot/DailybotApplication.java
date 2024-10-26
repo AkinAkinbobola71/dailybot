@@ -43,11 +43,14 @@ public class DailybotApplication {
 
             if (event.getText() != null && finalMembers.contains(userId)) {
                 saveResponse(userId, event.getText());
-                askQuestion(app, userId);
-            }
 
-            if (memberResponses.get(userId).size() == questions.length) {
-                printSummary(memberResponses.get(userId), userId, app);
+                if(memberResponses.get(userId).size() < questions.length){
+                    askQuestion(app, userId);
+                }else{
+                    printSummary(memberResponses.get(userId), userId, app);
+                    memberResponses.get(userId).clear();
+                    userQuestionState.put(userId, 0);
+                }
             }
             return ctx.ack();
         });
