@@ -23,7 +23,8 @@ public class DailybotApplication {
     private static final String[] questions = {
             "What did you do yesterday?",
             "What are you doing today?",
-            "Do you have any blockers?"};
+            "Do you have any blockers?"
+    };
 
 
     public static void main(String[] args) throws Exception {
@@ -44,9 +45,9 @@ public class DailybotApplication {
             if (event.getText() != null && finalMembers.contains(userId)) {
                 saveResponse(userId, event.getText());
 
-                if(memberResponses.get(userId).size() < questions.length){
+                if (memberResponses.get(userId).size() < questions.length) {
                     askQuestion(app, userId);
-                }else{
+                } else {
                     printSummary(memberResponses.get(userId), userId, app);
                     memberResponses.get(userId).clear();
                     userQuestionState.put(userId, 0);
