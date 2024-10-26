@@ -33,7 +33,7 @@ public class DailybotApplication {
         List<String> members = app.client().usersList(r -> r).getMembers().stream()
                 .filter(m -> !m.isBot()).map(User::getId).toList();
 
-        List<String> finalMembers = members.subList(1, 2);
+        List<String> finalMembers = members.subList(1, members.size());
 
         finalMembers.forEach(member -> startStandUp(app, member));
 
