@@ -1,9 +1,6 @@
 package dev.akinbobobla.dailybot.TeamMember;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,9 +16,10 @@ public class TeamMember {
 
     private String fullName;
 
+    @Column(unique = true)
     private String email;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> team;
 
     private String slackId;

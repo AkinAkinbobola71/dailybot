@@ -4,6 +4,7 @@ import com.slack.api.bolt.App;
 import com.slack.api.bolt.AppConfig;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.model.User;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -54,5 +55,15 @@ public class TeamMemberService {
 
         int numOfTeams = ThreadLocalRandom.current().nextInt(1, teams.size() + 1);
         return teams.subList(0, numOfTeams);
+    }
+
+    public List<String> getTeamMembers() {
+        return teamMemberRepository.findAll().stream().map(TeamMember::getSlackId).toList();
+    }
+
+    @Transactional
+    public List<String> getTeams(String slackId) {
+        TeamMember teamMember = teamMemberRepository.findBySlackId(slackId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return teamMember.getTeam();
     }
 }

@@ -21,4 +21,15 @@ public class DailyBotTests {
         List<User> members = teamMemberService.getSlackTeamMembers();
         teamMemberService.saveTeamMembers(members);
     }
+
+    @Test
+    public void getTeamMembers() {
+        List<String> teamMembers = teamMemberService.getTeamMembers();
+        System.out.println(teamMembers);
+    }
+
+    @Test
+    public void findTeamMemberBySlackId() {
+        System.out.println(teamMemberService.getTeams("U07T4EUHNVC"));
+    }
 }
