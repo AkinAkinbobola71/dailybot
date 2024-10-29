@@ -14,16 +14,12 @@ import java.util.List;
 public class DailyBotTests {
     @Autowired
     private TeamMemberService teamMemberService;
-
-
-    @Test
-    public void populateDatabase() throws SlackApiException, IOException {
-        List<User> members = teamMemberService.getSlackTeamMembers();
-        teamMemberService.saveTeamMembers(members);
-    }
+    @Autowired
+    private ExcelToDatabase excelToDatabase;
 
     @Test
-    public void getTeamMembers() {
+    public void getTeamMembers() throws IOException {
+        excelToDatabase.saveToDatabase();
         List<String> teamMembers = teamMemberService.getTeamMembers();
         System.out.println(teamMembers);
     }
@@ -31,5 +27,10 @@ public class DailyBotTests {
     @Test
     public void findTeamMemberBySlackId() {
         System.out.println(teamMemberService.getTeams("U07T4EUHNVC"));
+    }
+
+    @Test
+    public void excel(){
+        System.out.println("Test");
     }
 }

@@ -19,8 +19,7 @@ public class TeamMember {
     @Column(unique = true)
     private String email;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> team;
+    private String team;
 
     private String slackId;
 }

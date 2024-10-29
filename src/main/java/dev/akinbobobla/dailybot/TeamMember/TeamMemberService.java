@@ -32,16 +32,8 @@ public class TeamMemberService {
         return members.subList(1, members.size());
     }
 
-    public void saveTeamMembers(List<User> members) {
-        members.forEach(member -> {
-            TeamMember teamMember = new TeamMember();
-
-            teamMember.setFullName(member.getProfile().getRealName());
-            teamMember.setEmail(member.getProfile().getEmail());
-            teamMember.setSlackId(member.getId());
-            teamMember.setTeam(getRandomTeams());
-            teamMemberRepository.save(teamMember);
-        });
+    public void saveTeamMember(TeamMember member) {
+        teamMemberRepository.save(member);
     }
 
     private List<String> getRandomTeams() {
@@ -64,6 +56,6 @@ public class TeamMemberService {
     @Transactional
     public List<String> getTeams(String slackId) {
         TeamMember teamMember = teamMemberRepository.findBySlackId(slackId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        return teamMember.getTeam();
+        return List.of("yes");
     }
 }
