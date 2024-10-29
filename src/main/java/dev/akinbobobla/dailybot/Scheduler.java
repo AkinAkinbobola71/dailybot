@@ -5,6 +5,7 @@ import com.slack.api.model.event.MessageEvent;
 import com.slack.api.bolt.App;
 import com.slack.api.bolt.AppConfig;
 import com.slack.api.bolt.socket_mode.SocketModeApp;
+import dev.akinbobobla.dailybot.TeamMember.TeamMember;
 import dev.akinbobobla.dailybot.TeamMember.TeamMemberService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -87,7 +88,7 @@ public class Scheduler {
     }
 
     private void printSummary(List<String> responses, String userId, App app) throws SlackApiException, IOException {
-        List<String> teams = teamMemberService.getTeams(userId);
+        TeamMember teamMember = teamMemberService.getTeamMemberBySlackId(userId);
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy hh:mm a");
         String formattedDate = LocalDateTime.now().format(dateTimeFormatter);
@@ -110,22 +111,8 @@ public class Scheduler {
                     .append("\n");
         }
 
-        formatStandupChannel(teams).forEach(channel -> {
-            try {
-                app.client().chatPostMessage(r -> r.channel(channel).text(messageContent.toString()));
-            } catch (IOException | SlackApiException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        app.client().chatPostMessage(r -> r.channel(teamMember.getTeam()).text(messageContent.toString()));
 
         app.client().chatPostMessage(r -> r.channel("#general-standup-summary").text(messageContent.toString()));
-    }
-
-    private List<String> formatStandupChannel(List<String> departments) {
-        List<String> formattedDepartments = new ArrayList<>();
-        for (String department : departments) {
-            formattedDepartments.add("#" + department.toLowerCase().replace(" ", "-") + "-standup-summary");
-        }
-        return formattedDepartments;
     }
 }

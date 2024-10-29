@@ -1,7 +1,5 @@
 package dev.akinbobobla.dailybot;
 
-import com.slack.api.methods.SlackApiException;
-import com.slack.api.model.User;
 import dev.akinbobobla.dailybot.TeamMember.TeamMemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +24,6 @@ public class DailyBotTests {
 
     @Test
     public void findTeamMemberBySlackId() {
-        System.out.println(teamMemberService.getTeams("U07T4EUHNVC"));
-    }
-
-    @Test
-    public void excel(){
-        System.out.println("Test");
+        System.out.println(teamMemberService.getTeamMemberBySlackId("U07T4EUHNVC"));
     }
 }
