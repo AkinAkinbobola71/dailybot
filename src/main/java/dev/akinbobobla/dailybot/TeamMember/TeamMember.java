@@ -23,5 +23,4 @@ public class TeamMember {
     private List<String> team;
 
     private String slackId;
-
 }
