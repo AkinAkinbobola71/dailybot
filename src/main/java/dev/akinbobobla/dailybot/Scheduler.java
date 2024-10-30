@@ -111,7 +111,7 @@ public class Scheduler {
                     .append("\n");
         }
 
-        app.client().chatPostMessage(r -> r.channel(teamMember.getTeam()).text(messageContent.toString()));
+        app.client().chatPostMessage(r -> r.channel(teamMember.getSlackChannelName()).text(messageContent.toString()));
 
         app.client().chatPostMessage(r -> r.channel("#general-standup-summary").text(messageContent.toString()));
     }

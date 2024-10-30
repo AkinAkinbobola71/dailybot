@@ -1,5 +1,7 @@
 package dev.akinbobobla.dailybot;
 
+import com.slack.api.bolt.App;
+import com.slack.api.bolt.AppConfig;
 import dev.akinbobobla.dailybot.TeamMember.TeamMember;
 import dev.akinbobobla.dailybot.TeamMember.TeamMemberService;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -14,9 +16,12 @@ import java.io.IOException;
 @Service
 public class ExcelToDatabase {
     private final TeamMemberService teamMemberService;
+    private final App app;
 
     public ExcelToDatabase(TeamMemberService teamMemberService) {
         this.teamMemberService = teamMemberService;
+        String botToken = System.getenv("SLACK_TOKEN");
+        this.app = new App(AppConfig.builder().singleTeamBotToken(botToken).build());
     }
 
     public void saveToDatabase() throws IOException {
@@ -36,12 +41,12 @@ public class ExcelToDatabase {
 
                 if (row.getCell(4) != null && row.getCell(7) != null && row.getCell(2) != null && row.getCell(3) != null && !dataFormatter.formatCellValue(row.getCell(3)).contains("SQUAD")) {
                     teamMember.setEmail(dataFormatter.formatCellValue(row.getCell(4)));
-                    teamMember.setTeam(dataFormatter.formatCellValue(row.getCell(7)));
+                    teamMember.setSlackChannelName(dataFormatter.formatCellValue(row.getCell(7)));
                     teamMember.setFullName(dataFormatter.formatCellValue(row.getCell(2)) + " " + dataFormatter.formatCellValue(row.getCell(3)));
                 }
 
                 if (teamMember.getEmail() != null && !teamMember.getEmail().isEmpty() &&
-                        teamMember.getTeam() != null && !teamMember.getTeam().isEmpty() &&
+                        teamMember.getSlackChannelName() != null && !teamMember.getSlackChannelName().isEmpty() &&
                         teamMember.getFullName() != null && !teamMember.getFullName().isEmpty()) {
 
                     teamMemberService.saveTeamMember(teamMember);
