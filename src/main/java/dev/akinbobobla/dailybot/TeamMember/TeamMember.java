@@ -12,8 +12,6 @@ public class TeamMember {
     @GeneratedValue
     private Integer id;
 
-    private String fullName;
-
     @Column(unique = true)
     private String email;
 

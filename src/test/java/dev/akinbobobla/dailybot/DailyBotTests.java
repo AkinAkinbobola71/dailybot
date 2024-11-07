@@ -1,5 +1,7 @@
 package dev.akinbobobla.dailybot;
 
+import com.slack.api.methods.SlackApiException;
+import com.slack.api.model.User;
 import dev.akinbobobla.dailybot.TeamMember.TeamMemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,9 @@ public class DailyBotTests {
     private ExcelToDatabase excelToDatabase;
 
     @Test
-    public void getTeamMembers() throws IOException {
-        excelToDatabase.saveToDatabase();
-        List<String> teamMembers = teamMemberService.getTeamMembers();
-        System.out.println(teamMembers);
+    public void getTeamMembers() throws IOException, SlackApiException {
+        List<User> teamMembers = teamMemberService.getSlackTeamMembers();
+        excelToDatabase.saveToDatabase(teamMembers);
     }
 
     @Test
