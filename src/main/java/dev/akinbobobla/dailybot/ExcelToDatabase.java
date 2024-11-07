@@ -43,7 +43,7 @@ public class ExcelToDatabase {
                 }
 
                 if (row.getCell(4) != null && row.getCell(7) != null && row.getCell(2) != null && row.getCell(3) != null &&
-                        !dataFormatter.formatCellValue(row.getCell(3)).contains("SQUAD")) {
+                        !dataFormatter.formatCellValue(row.getCell(3)).contains("SQUAD") && dataFormatter.formatCellValue(row.getCell(1)).equals("Intern")) {
 
                     try {
                         String email = dataFormatter.formatCellValue(row.getCell(4));
@@ -72,7 +72,6 @@ public class ExcelToDatabase {
                         throw new RuntimeException("Unexpected error processing row", e);
                     }
                 }
-
 
 
                 if (teamMember.getEmail() != null && !teamMember.getEmail().isEmpty() &&

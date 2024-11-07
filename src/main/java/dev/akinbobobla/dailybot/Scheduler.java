@@ -32,7 +32,7 @@ public class Scheduler {
     }
 
 //    @Scheduled(cron = "0 44 10 * * Mon-Fri")
-//    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 10000)
     public void schedule() throws Exception {
         String botToken = System.getenv("SLACK_TOKEN");
         App app = new App(AppConfig.builder().singleTeamBotToken(botToken).build());
