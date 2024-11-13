@@ -31,8 +31,7 @@ public class Scheduler {
         this.teamMemberService = teamMemberService;
     }
 
-//    @Scheduled(cron = "0 0 9 * * Mon-Fri")
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(cron = "0 55 20 * * Mon-Fri")
     public void schedule() throws Exception {
         String botToken = System.getenv("SLACK_TOKEN");
         App app = new App(AppConfig.builder().singleTeamBotToken(botToken).build());
