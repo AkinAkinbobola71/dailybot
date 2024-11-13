@@ -39,7 +39,10 @@ public class Scheduler {
 
         List<String> finalMembers = teamMemberService.getTeamMembers();
 
-        finalMembers.forEach(member -> startStandUp(app, member));
+        finalMembers.forEach(member -> {
+            System.out.println("Starting standup for " + member);
+            startStandUp(app, member);
+        });
 
         app.event(MessageEvent.class, (req, ctx) -> {
             MessageEvent event = req.getEvent();
