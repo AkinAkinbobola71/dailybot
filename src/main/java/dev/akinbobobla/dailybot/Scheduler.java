@@ -31,8 +31,8 @@ public class Scheduler {
         this.teamMemberService = teamMemberService;
     }
 
-//    @Scheduled(cron = "0 44 10 * * Mon-Fri")
-    @Scheduled(fixedRate = 10000)
+//    @Scheduled(cron = "0 0 9 * * Mon-Fri")
+    @Scheduled(fixedRate = 1000)
     public void schedule() throws Exception {
         String botToken = System.getenv("SLACK_TOKEN");
         App app = new App(AppConfig.builder().singleTeamBotToken(botToken).build());
@@ -114,6 +114,6 @@ public class Scheduler {
 
         app.client().chatPostMessage(r -> r.channel(teamMember.getSlackChannelName()).text(messageContent.toString()));
 
-//        app.client().chatPostMessage(r -> r.channel("#general-standup-summary").text(messageContent.toString()));
+//        app.client().chatPostMessage(r -> r.channel("#test-summary").text(messageContent.toString()));
     }
 }
