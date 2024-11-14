@@ -87,7 +87,7 @@ public class Scheduler {
     }
 
     private void printSummary(List<String> responses, String userId, App app) throws SlackApiException, IOException {
-        TeamMember teamMember = teamMemberService.getTeamMemberBySlackId(userId);
+//        TeamMember teamMember = teamMemberService.getTeamMemberBySlackId(userId);
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy hh:mm a");
         String formattedDate = LocalDateTime.now().format(dateTimeFormatter);
