@@ -34,6 +34,9 @@ public class Scheduler {
     }
 
     public void schedule() throws Exception {
+        memberResponses.clear();
+        userQuestionState.clear();
+
         String botToken = System.getenv("SLACK_TOKEN");
         App app = new App(AppConfig.builder().singleTeamBotToken(botToken).build());
 
