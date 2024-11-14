@@ -1,19 +1,21 @@
 package dev.akinbobobla.dailybot;
 
-import com.slack.api.methods.SlackApiException;
-import com.slack.api.model.event.MessageEvent;
 import com.slack.api.bolt.App;
 import com.slack.api.bolt.AppConfig;
 import com.slack.api.bolt.socket_mode.SocketModeApp;
+import com.slack.api.methods.SlackApiException;
+import com.slack.api.model.event.MessageEvent;
 import dev.akinbobobla.dailybot.TeamMember.TeamMember;
 import dev.akinbobobla.dailybot.TeamMember.TeamMemberService;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class Scheduler {
@@ -31,17 +33,13 @@ public class Scheduler {
         this.teamMemberService = teamMemberService;
     }
 
-    @Scheduled(cron = "0 0 9 * * Mon-Fri")
     public void schedule() throws Exception {
         String botToken = System.getenv("SLACK_TOKEN");
         App app = new App(AppConfig.builder().singleTeamBotToken(botToken).build());
 
         List<String> finalMembers = teamMemberService.getTeamMembers();
 
-        finalMembers.forEach(member -> {
-            System.out.println("Starting standup for " + member);
-            startStandUp(app, member);
-        });
+        finalMembers.forEach(member -> startStandUp(app, member));
 
         app.event(MessageEvent.class, (req, ctx) -> {
             MessageEvent event = req.getEvent();
