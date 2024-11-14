@@ -40,7 +40,9 @@ public class Scheduler {
         String botToken = System.getenv("SLACK_TOKEN");
         App app = new App(AppConfig.builder().singleTeamBotToken(botToken).build());
 
-        List<String> finalMembers = teamMemberService.getTeamMembers();
+//        List<String> finalMembers = teamMemberService.getTeamMembers();
+
+        List<String> finalMembers = List.of("U07T4EUHNVC");
 
         finalMembers.forEach(member -> startStandUp(app, member));
 
@@ -61,10 +63,6 @@ public class Scheduler {
             }
             return ctx.ack();
         });
-
-        String appToken = System.getenv("SOCKET_TOKEN");
-        SocketModeApp socketModeApp = new SocketModeApp(appToken, app);
-        socketModeApp.start();
     }
 
     private static void askQuestion(App app, String member) {
