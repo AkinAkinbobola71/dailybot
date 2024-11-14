@@ -1,9 +1,9 @@
 package dev.akinbobobla.dailybot;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DailyBotController {
@@ -11,22 +11,14 @@ public class DailyBotController {
     private static final Logger logger = LoggerFactory.getLogger(DailyBotController.class);
 
     private final Scheduler scheduler;
-    private final ExcelToDatabase excelToDatabase;
 
-    public DailyBotController(Scheduler scheduler, ExcelToDatabase excelToDatabase) {
+    public DailyBotController(Scheduler scheduler) {
         this.scheduler = scheduler;
-        this.excelToDatabase = excelToDatabase;
     }
 
     @GetMapping("/")
     public String initiateStandupProcess() {
-        logger.info("Starting standup initiation process...");
-
         try {
-            logger.info("Saving Excel data to the database...");
-            excelToDatabase.saveToDatabase();
-            logger.info("Excel data saved successfully.");
-
             logger.info("Starting scheduled standup tasks...");
             scheduler.schedule();
             logger.info("Scheduled standup tasks completed successfully.");
