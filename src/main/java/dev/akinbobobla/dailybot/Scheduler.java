@@ -110,8 +110,8 @@ public class Scheduler {
                     .append("\n");
         }
 
-        app.client().chatPostMessage(r -> r.channel(teamMember.getSlackChannelName()).text(messageContent.toString()));
+//        app.client().chatPostMessage(r -> r.channel(teamMember.getSlackChannelName()).text(messageContent.toString()));
 
-//        app.client().chatPostMessage(r -> r.channel("#test-summary").text(messageContent.toString()));
+        app.client().chatPostMessage(r -> r.channel("#all-dailbot-clone").text(messageContent.toString()));
     }
 }
