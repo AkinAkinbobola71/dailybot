@@ -1,8 +1,6 @@
 package dev.akinbobobla.dailybot;
 
 import com.slack.api.bolt.App;
-import com.slack.api.bolt.AppConfig;
-import com.slack.api.bolt.socket_mode.SocketModeApp;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.model.event.MessageEvent;
 import dev.akinbobobla.dailybot.TeamMember.TeamMember;
@@ -19,6 +17,8 @@ import java.util.Map;
 
 @Component
 public class Scheduler {
+    private final App app;
+
     private static final Map<String, List<String>> memberResponses = new HashMap<>();
     private static final Map<String, Integer> userQuestionState = new HashMap<>();
     private final TeamMemberService teamMemberService;
@@ -29,16 +29,14 @@ public class Scheduler {
             "Do you have any blockers?"
     };
 
-    public Scheduler(TeamMemberService teamMemberService) {
+    public Scheduler(App app, TeamMemberService teamMemberService) {
+        this.app = app;
         this.teamMemberService = teamMemberService;
     }
 
     public void schedule() throws Exception {
         memberResponses.clear();
         userQuestionState.clear();
-
-        String botToken = System.getenv("SLACK_TOKEN");
-        App app = new App(AppConfig.builder().singleTeamBotToken(botToken).build());
 
 //        List<String> finalMembers = teamMemberService.getTeamMembers();
         List<String> finalMembers = List.of("U07T4EUHNVC");
