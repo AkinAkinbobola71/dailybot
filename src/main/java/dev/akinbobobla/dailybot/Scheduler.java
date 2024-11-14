@@ -39,7 +39,7 @@ public class Scheduler {
         userQuestionState.clear();
 
 //        List<String> finalMembers = teamMemberService.getTeamMembers();
-        List<String> finalMembers = List.of("U07TNGL0S74");
+        List<String> finalMembers = List.of("U07T4EUHNVC");
 
         finalMembers.forEach(member -> startStandUp(app, member));
 
@@ -112,6 +112,6 @@ public class Scheduler {
 
 //        app.client().chatPostMessage(r -> r.channel(teamMember.getSlackChannelName()).text(messageContent.toString()));
 
-        app.client().chatPostMessage(r -> r.channel("#general-standup").text(messageContent.toString()));
+        app.client().chatPostMessage(r -> r.channel("#all-dailbot-clone").text(messageContent.toString()));
     }
 }
