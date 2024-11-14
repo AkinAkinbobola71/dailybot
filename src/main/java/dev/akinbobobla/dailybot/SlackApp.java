@@ -8,13 +8,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SlackApp {
     @Bean
-    public App initSlackApp() {
-        String botToken = System.getenv("SLACK_TOKEN");
+    public AppConfig loadSingleWorkspaceAppConfig() {
+        return AppConfig.builder()
+                .singleTeamBotToken(System.getenv("SLACK_BOT_TOKEN"))
+                .signingSecret(System.getenv("SLACK_SIGNING_SECRET"))
+                .build();
+    }
 
-        if (botToken == null || botToken.isEmpty()) {
-            throw new IllegalArgumentException("SLACK_TOKEN environment variable is required");
-        }
+    @Bean
+    public App initSlackApp(AppConfig appConfig) {
 
-        return new App(AppConfig.builder().singleTeamBotToken(botToken).build());
+        return new App(appConfig);
     }
 }
