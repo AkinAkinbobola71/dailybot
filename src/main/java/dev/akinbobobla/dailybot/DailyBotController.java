@@ -35,6 +35,7 @@ public class DailyBotController {
 
     @PostMapping("/slack/events")
     public ResponseEntity<String> handleSlackEvents(@RequestBody Map<String, Object> payload) {
+        logger.info(payload.toString());
         if ("url_verification".equals(payload.get("type"))) {
             String challenge = (String) payload.get("challenge");
             return ResponseEntity.ok(challenge);
