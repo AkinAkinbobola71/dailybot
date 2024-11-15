@@ -34,12 +34,11 @@ public class Scheduler {
         this.teamMemberService = teamMemberService;
     }
 
-    public void schedule() throws Exception {
+    public void schedule() {
         memberResponses.clear();
         userQuestionState.clear();
 
-//        List<String> finalMembers = teamMemberService.getTeamMembers();
-        List<String> finalMembers = List.of("U07T4EUHNVC");
+        List<String> finalMembers = teamMemberService.getTeamMembers();
 
         finalMembers.forEach(member -> startStandUp(app, member));
 
@@ -87,7 +86,7 @@ public class Scheduler {
     }
 
     private void printSummary(List<String> responses, String userId, App app) throws SlackApiException, IOException {
-//        TeamMember teamMember = teamMemberService.getTeamMemberBySlackId(userId);
+        TeamMember teamMember = teamMemberService.getTeamMemberBySlackId(userId);
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy hh:mm a");
         String formattedDate = LocalDateTime.now().format(dateTimeFormatter);
@@ -110,8 +109,8 @@ public class Scheduler {
                     .append("\n");
         }
 
-//        app.client().chatPostMessage(r -> r.channel(teamMember.getSlackChannelName()).text(messageContent.toString()));
+        app.client().chatPostMessage(r -> r.channel(teamMember.getSlackChannelName()).text(messageContent.toString()));
 
-        app.client().chatPostMessage(r -> r.channel("#all-dailbot-clone").text(messageContent.toString()));
+//        app.client().chatPostMessage(r -> r.channel("#all-dailbot-clone").text(messageContent.toString()));
     }
 }
