@@ -17,7 +17,6 @@ public class SlackApp {
 
     @Bean
     public App initSlackApp(AppConfig appConfig) {
-
         return new App(appConfig);
     }
 }

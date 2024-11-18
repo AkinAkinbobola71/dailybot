@@ -1,7 +1,7 @@
 package dev.akinbobobla.dailybot;
 
+
 import com.slack.api.bolt.App;
-import com.slack.api.bolt.AppConfig;
 import com.slack.api.methods.SlackApiException;
 import dev.akinbobobla.dailybot.TeamMember.TeamMember;
 import dev.akinbobobla.dailybot.TeamMember.TeamMemberService;
@@ -19,10 +19,9 @@ public class ExcelToDatabase {
     private final TeamMemberService teamMemberService;
     private final App app;
 
-    public ExcelToDatabase(TeamMemberService teamMemberService) {
+    public ExcelToDatabase(TeamMemberService teamMemberService, App app) {
         this.teamMemberService = teamMemberService;
-        String botToken = System.getenv("SLACK_TOKEN");
-        this.app = new App(AppConfig.builder().singleTeamBotToken(botToken).build());
+        this.app = app;
     }
 
     public void saveToDatabase() throws IOException {
